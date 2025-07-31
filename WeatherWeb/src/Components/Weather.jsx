@@ -66,7 +66,7 @@ const A = () => {
       <div className="w-full max-w-md mb-10 relative drop-shadow-xl flex">
         <input
           type="text"
-          placeholder="Location search"
+          placeholder=" Search Location  on CloudMood"
           className="w-full py-4 pl-6 pr-12 rounded-full bg-white/50 shadow-[inset_4px_4px_10px_rgba(255,255,255,0.6),inset_-4px_-4px_10px_rgba(0,0,0,0.1)] backdrop-blur-md text-gray-700 placeholder-gray-500 focus:outline-none"
           onChange={(e) => {
             setIpval(e.target.value);
