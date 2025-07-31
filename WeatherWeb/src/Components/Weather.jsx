@@ -43,7 +43,7 @@ const A = () => {
 
         ////////fetch keliye
         const reqWeater = await fetch(
-          `http://api.weatherapi.com/v1/current.json?key=32ac799408644e9ca6665959252907&q=${quary}&aqi=no`
+          `https://api.weatherapi.com/v1/current.json?key=32ac799408644e9ca6665959252907&q=${quary}&aqi=no`
         );
         const resWeater = await reqWeater.json();
         // console.log(resWeater);
