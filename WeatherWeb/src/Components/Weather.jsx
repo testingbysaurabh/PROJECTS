@@ -76,7 +76,7 @@ const A = () => {
           onClick={() => {
             setQuary(ipval);
           }}
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-4xl hover:cursor-pointer"
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 text-3xl hover:cursor-pointer"
         >
           🔍
         </span>
