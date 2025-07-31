@@ -16,7 +16,7 @@ const A = () => {
     async function GetLandindLocaation() {
       try {
         const res = await fetch(
-          `http://api.weatherapi.com/v1/current.json?key=32ac799408644e9ca6665959252907&q=auto:ip`
+          `https://api.weatherapi.com/v1/current.json?key=32ac799408644e9ca6665959252907&q=auto:ip`
         );
         const data = await res.json();
         setQuary(data.location.name);
