@@ -4,8 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 const Cart = () => {
-  const { orignalData, cartData, setCartData} =
-    contextCall();
+  const { orignalData, cartData, setCartData } = contextCall();
 
   const Navigate = useNavigate();
   const [obj] = useSearchParams();
@@ -13,25 +12,44 @@ const Cart = () => {
 
   useEffect(() => {
     if (quaryId) {
-      const product = orignalData.find((items) => items.id == quaryId);
-      if (
-        product &&
-        !cartData.some((item) => item.product?.id === product.id)
-      ) {
-        setCartData([...cartData, { product }]);
+      const product = orignalData.find((item) => item.id == quaryId);
+      const isAlreadyInCart = cartData.some(
+        (item) => item.product.id === product.id
+      );
+
+      if (product && !isAlreadyInCart) {
+        setCartData([...cartData, { product, quantity: 1 }]);
       }
     }
   }, [quaryId, orignalData]);
 
-  
   const handleRemove = (id) => {
     const updatedCart = cartData.filter((item) => item.product.id !== id);
     setCartData(updatedCart);
-   
+  };
+
+  const handleIncrease = (id) => {
+    const updatedCart = cartData.map((item) =>
+      item.product.id === id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+    setCartData(updatedCart);
+  };
+
+  const handleDecrease = (id) => {
+    const updatedCart = cartData
+      .map((item) =>
+        item.product.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+      .filter((item) => item.quantity > 0);
+    setCartData(updatedCart);
   };
 
   const totalPrice = cartData.reduce(
-    (sum, item) => sum + (item.product?.price || 0),
+    (sum, item) => sum + item.product.price * item.quantity,
     0
   );
 
@@ -39,17 +57,13 @@ const Cart = () => {
     return (
       <div className="text-center text-red-500 mt-10 text-xl">
         No products in cart
-      
       </div>
     );
-
   }
-  console.log(cartData.length)
 
   return (
     <div className="bg-gray-900 min-h-screen py-10 px-4">
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-6 space-y-8">
-
         {/* Back Button */}
         <button
           className="flex items-center gap-1 text-[#48A6A7] hover:text-[#36c4c6] transition"
@@ -83,6 +97,25 @@ const Cart = () => {
                 <p className="text-sm text-gray-400">
                   Category: {item.product?.category}
                 </p>
+
+                {/* Quantity Controls */}
+                <div className="flex gap-2 items-center mt-2">
+                  <button
+                    className="px-2 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                    onClick={() => handleDecrease(item.product.id)}
+                  >
+                    −
+                  </button>
+                  <span className="text-sm font-semibold">{item.quantity}</span>
+                  <button
+                    className="px-2 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                    onClick={() => handleIncrease(item.product.id)}
+                  >
+                    +
+                  </button>
+                </div>
+
+                {/* Remove Button */}
                 <button
                   onClick={() => handleRemove(item.product.id)}
                   className="mt-2 bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-1 rounded"
@@ -121,10 +154,16 @@ const Cart = () => {
         </div>
       </div>
 
+
+
+
+
+
+
+
       {/* Footer */}
       <footer className="bg-gray-900 text-white mt-10">
         <div className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* About */}
           <div>
             <h2 className="text-lg font-semibold mb-2">About LaVitrine</h2>
             <p className="text-sm text-gray-400">
@@ -132,18 +171,32 @@ const Cart = () => {
             </p>
           </div>
 
-          {/* Links */}
           <div>
             <h2 className="text-lg font-semibold mb-2">Quick Links</h2>
             <ul className="text-sm text-gray-400 space-y-1">
-              <li><a href="/home" className="hover:text-white">Home</a></li>
-              <li><a href="/cart" className="hover:text-white">Cart</a></li>
-              <li><a href="#" className="hover:text-white">Products</a></li>
-              <li><a href="#" className="hover:text-white">Contact</a></li>
+              <li>
+                <a href="/home" className="hover:text-white">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="/cart" className="hover:text-white">
+                  Cart
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Products
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white">
+                  Contact
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h2 className="text-lg font-semibold mb-2">Contact Us</h2>
             <p className="text-sm text-gray-400">📧 support@lavitrine.com</p>

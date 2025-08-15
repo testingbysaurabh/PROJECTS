@@ -16,7 +16,7 @@ const Setting=lazy(()=>import('./Setting'))
 const Cart=lazy(()=>import("./Cart"))
 const ProductView =lazy(()=>import("./ProductView"))
 const Navbar=lazy(()=>import("./Navbar"))
-const CartUpdate=lazy(()=>import("./CartUpdate"))
+// const CartUpdate=lazy(()=>import("./CartUpdate"))
 const HomeExtend =lazy(()=>import('./HomeExtend'))
 
 
@@ -33,7 +33,7 @@ const Lr = () => {
                     <Route path='/productpage' element={<ProductView />} />
                     <Route path='/cart' element={<Cart />} />
                     <Route path='/setting' element={<Setting />} />
-                    <Route path='/cartupdate' element={<CartUpdate />} />
+                    {/* <Route path='/cartupdate' element={<CartUpdate />} /> */}
                 </Route>
             </Routes>
         </div>
