@@ -1,0 +1,13 @@
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes text-animate {
+    to {
+      background-position-x: -200px;
+    }
+  }
+
+  .animate-text-animate {
+    animation: text-animate 10s linear infinite;
+  }
+}
