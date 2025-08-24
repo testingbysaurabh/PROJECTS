@@ -85,7 +85,7 @@ const Cart = () => {
             className="flex items-center gap-1 text-[#48A6A7] hover:text-[#36c4c6] transition mb-4 cursor-pointer"
             onClick={() => navigate("/home")}
           >
-            <FaShoppingBag size={25}/>
+            <FaShoppingBag size={25} />
           </button>
         </div>
 
@@ -93,9 +93,9 @@ const Cart = () => {
 
         {/* Cart Items */}
         <div className="grid gap-6">
-          {cartData.map((item, idx) => (
+          {cartData.map((item) => (
             <div
-              key={item.product?.id || idx}
+              key={item.product?.id}
               className="flex flex-col md:flex-row gap-6 border-b pb-6"
             >
 
@@ -163,7 +163,7 @@ const Cart = () => {
           </h3>
           <div className="flex justify-between text-sm mb-2">
             <span>Price</span>
-            <span>₹{totalPrice}</span>
+            <span>₹{(totalPrice).toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm mb-2">
             <span>Discount</span>
@@ -175,7 +175,8 @@ const Cart = () => {
           </div>
           <div className="border-t pt-2 flex justify-between font-bold text-gray-700">
             <span>Total Amount</span>
-            <span>₹{totalPrice - cartData.length}</span>
+            {/* <span>₹{totalPrice - cartData.length}</span> */}
+            <span>₹{(totalPrice - cartData.length).toFixed(2)}</span>
           </div>
           <button
             onClick={() => navigate("/ShippingDetails")}

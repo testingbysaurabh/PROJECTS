@@ -5,14 +5,16 @@ import { FaRegEye } from "react-icons/fa";
 import Footer from "./Footer";
 import SkeletonCard from "../Components/SkeletonCard";
 import toast from "react-hot-toast";
-// import { LiaCartPlusSolid } from "react-icons/lia";
 import { LuShoppingCart } from "react-icons/lu";
 import Navbar from "./Navbar";
+
 
 const Home = () => {
   const { orignalData, setOrignalData, data, setData, cartData, setCartData } = contextCall();
   const [loading, setLoading] = useState(true);
+  const [addedItems, setAddedItems] = useState([]);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     let isMounted = true;
@@ -20,8 +22,8 @@ const Home = () => {
     async function getData() {
       try {
         const res = await fetch("https://dummyjson.com/products");
-        if (!res.ok) {
-          throw new Error(`Server error: ${res.status}`);
+        if (!res) {
+          console.log("error in api")
         }
         const data = await res.json();
         if (isMounted) {
@@ -44,21 +46,28 @@ const Home = () => {
     };
   }, [setOrignalData, setData]);
 
+
+
   const viewBtnHandler = (id) => {
     navigate(`/productpage?id=${id}`);
   };
 
+
+
   const AddtocartBtnHandler = (id) => {
     const product = orignalData.find(item => item.id === id);
     const isAlreadyInCart = cartData.some(item => item.product.id === id);
+
     if (!isAlreadyInCart) {
       setCartData([...cartData, { product, quantity: 1 }]);
       toast.success(`${product.title} added to cart`);
+      setAddedItems(prev => [...prev, id]);
     } else {
-      toast('Product already in cart');
+      navigate("/cart");
     }
-
   };
+
+
 
   return (
     <>
@@ -89,13 +98,15 @@ const Home = () => {
                       View &nbsp;<FaRegEye />
                     </button>
 
+
                     <button
                       onClick={() => AddtocartBtnHandler(item.id)}
                       className="flex items-center justify-between bg-emerald-500 rounded-lg hover:bg-emerald-700 px-2 cursor-pointer"
                     >
-                      Add to &nbsp; <LuShoppingCart size={23} />
-
+                      {addedItems.includes(item.id) ? "Go to Cart" : "Add to"} &nbsp;
+                      <LuShoppingCart size={23} />
                     </button>
+
                   </div>
                 </div>
               </div>
