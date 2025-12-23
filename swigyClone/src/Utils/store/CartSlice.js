@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
+
 const cartSlice = createSlice({
   name: "Cart",
   initialState: {
